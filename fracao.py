@@ -1,95 +1,87 @@
 class Fracao:
-    numerador = 1
-    denominador = 1
+  numerador = 1 
+  denominador = 1 
+  
 
-    def _init_(self, numerador, denominador):
-        self.numerador = numerador
-        self.denominador = denominador
-
-    def add(self, fracao):
-        num = (self.numerador * fracao.denominador) + (fracao.numerador *
-                                                       self.denominador)
-        den = (self.denominador * fracao.denominador)
-        return Fracao(num, den)
-
-    def sub(self, fracao):
-        if (self.denominador
-                == fracao.denominador) & (self.numerador != fracao.numerador):
-            num = (self.numerador - fracao.numerador)
-            den = (self.denominador)
-        elif (self.denominador == fracao.denominador) & (self.numerador
-                                                         == fracao.numerador):
-            num = 0
-            den = 0
-        else:
-            num = (self.numerador * fracao.denominador) - (fracao.numerador *
-                                                           self.denominador)
-            den = (self.denominador * fracao.denominador)
-        return Fracao(num, den)
-
-    def mul(self, fracao):
-        num = (self.numerador * fracao.numerador)
-        den = (self.denominador * fracao.denominador)
-        return Fracao(num, den)
-
-    def infinito():
-        teste = 0
-        while True:
-            yield teste
-            teste += 1
-
-    def simplify(self):        
-      loop = True
-      i = 2
-      
-      while loop == True:               
-        controle = False
-        if self.numerador / i == 1 or self.denominador / i == 1:
-          loop = False
-        
-        if self.numerador % i == 0 and self.denominador % i == 0:       
-          self.numerador = self.numerador / i
-          self.denominador = self.denominador / i
-          controle = True
-          
-        else:          
-          i += 1
-          controle = True
-
-        if controle == False:
-          loop = False
-          
-          
-      return Fracao(self.numerador,self.denominador)
-
-    def gcd(self):
-        while self.denominador != 0:
-            t = self.denominador
-            self.denominador = self.numerador % self.denominador
-            self.numerador = t
-        return self.numerador
-
-    def reducefract(self):
-        greatest = self.gcd(self)
-        num = self.numerador / greatest
-        den = self.denominador / greatest
-        return Fracao(num, den)
-
-    def solve(self):
-        return self.numerador / self.denominador
-
-    def _str_(self):
-        return f"{self.numerador}/{self.denominador}"
+  def __init__(self, numerador, denominador):
+    self.numerador = numerador
+    self.denominador = denominador
+  def add(self, fracao):
+    num = (self.numerador * fracao.denominador) \
+        + (fracao.numerador * self.denominador)
+    den = self.denominador * fracao.denominador
+    return Fracao(num,den)
+  def solve(self): 
+    return self.numerador / self.denominador
+  def __str__(self):
+    return f"{self.numerador}/{self.denominador}"
+  def sub(self,fracao):
+    num = (self.numerador * fracao.denominador) \
+        - (fracao.numerador * self.denominador)
+    den = self.denominador * fracao.denominador
+    return Fracao(num,den)
+  def mul(self,fracao):
+    num = (self.numerador * fracao.denominador) \
+        * (fracao.numerador * self.denominador)
+    den = self.denominador * fracao.denominador
+    return Fracao(num,den) 
+  def simpl(self):
+    num = self.numerador
+    den = self.denominador
+    while num%2==0 and den%2==0 or num%3==0 and den%3==0 or num%5==0 and den%5==0 or num%7==0 and den%7==0:
+      if num%2==0 and den%2==0:
+          num/=2                                           ##TESTAR COM NUM NO LUGAR DOS SELFS.
+          den/=2
+      elif num%3==0 and den%3==0:
+          num/=3
+          den/=3   
+      elif num%5==0 and den%5==0:
+          num/=5
+          den/=5   
+      elif num%7==0 and den%7==0:
+          num/=7
+          den/=7
+    return Fracao(num,den)
 
 
-fracao1 = Fracao(24,60)
-print(f"Simplificacao: {fracao1.simplify()}")
-
-fracao1 = Fracao(56,75) #nao tem como simplificar essa
-print(f"Simplificacao: {fracao1.simplify()}")
-
-fracao1 = Fracao(8,20)
-print(f"Simplificacao: {fracao1.simplify()}")
-
-fracao1 = Fracao(200,350)
-print(f"Simplificacao: {fracao1.simplify()}")
+def menu():
+  print("CALCULADORA!!")
+  print("1 - SOMA")
+  print("2 - SUBTRAÇÃO")
+  print("3 - MULTIPLICAÇÃO")
+  print("4 - DIVISÃO")
+  print("5 - SIMPLIFICAÇÃO")
+  print("6 - RESOLVER")
+       
+  
+x = int(input("digite x: "))
+y = int(input("digite y: "))  
+code = 0
+menu() 
+fracao1 = Fracao(x,y)
+code = int(input("digite a opção: "))
+if code == 1:
+   z = int(input("digite x2: "))
+   w = int(input("digite y2: "))  
+   fracao2 = Fracao(z,w)
+   print(Fracao.add(fracao1,fracao2))
+elif  code == 2:
+   z = int(input("digite x2: "))
+   w = int(input("digite y2: "))  
+   fracao2 = Fracao(z,w)
+   print(Fracao.sub(fracao1,fracao2))
+elif  code == 3:
+   z = int(input("digite x2: "))
+   w = int(input("digite y2: "))  
+   fracao2 = Fracao(z,w)
+   print(Fracao.mul(fracao1,fracao2))  
+elif  code == 4:
+   z = int(input("digite x2: "))
+   w = int(input("digite y2: "))  
+   fracao2 = Fracao(z,w)    
+   print(Fracao.sub(fracao1,fracao2))  
+elif code == 5:
+   fracao1 = Fracao.simpl(fracao1)  
+   print(f"fração simplificada: {fracao1}")
+elif code == 6:
+   print(Fracao.solve(fracao1))  
